@@ -1,18 +1,23 @@
-import * as React from "react";
-import Container from "@mui/material/Container";
 import { getAddresses } from "@/requests/server/addresses";
-import PageHeaderCw from "@/content/Addresses/components/PageHeaderCw";
 import { Grid } from "@mui/material";
-import ResultsCw from "@/content/Addresses/components/ResultsCw";
+import Addresses from "@/content/Addresses/Addresses";
+import { I18nProviderClient } from "@/translations/locales/client";
+// import { getI18n } from "@/translations/locales/server";
 
-export default async function AddressesPage() {
+interface AddressesProps {
+  params: {
+    lang: string;
+  };
+}
+
+export default async function AddressesPage({
+  params: { lang },
+}: AddressesProps) {
   const data = await getAddresses();
+  // const t = await getI18n();
 
   return (
     <>
-      <PageTitleWrapper>
-        <PageHeaderCw />
-      </PageTitleWrapper>
       <Grid
         sx={{ px: 4 }}
         container
@@ -22,10 +27,11 @@ export default async function AddressesPage() {
         spacing={3}
       >
         <Grid item xs={12}>
-          <ResultsCw />
+          <I18nProviderClient locale={lang}>
+            <Addresses addresses={data} />
+          </I18nProviderClient>
         </Grid>
       </Grid>
-      <Footer />
     </>
   );
 }

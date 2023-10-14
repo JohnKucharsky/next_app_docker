@@ -1,4 +1,9 @@
-import { TimeStampsAndId } from "@/types/common";
+import { Pagination, TimeStampsAndId } from "@/types/common";
+
+export interface PaginatedAddresses {
+  data: Address[];
+  pagination: Pagination;
+}
 
 export interface Address extends TimeStampsAndId {
   company: number;
